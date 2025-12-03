@@ -22,7 +22,8 @@ app.use(cookieParser());
 app.use(
   cors({
     // origin: process.env.FRONTEND_URL,
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -40,7 +41,8 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     // origin: process.env.FRONTEND_URL,
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: process.env.FRONTEND_URL,
+    
     credentials: true,
   },
 });

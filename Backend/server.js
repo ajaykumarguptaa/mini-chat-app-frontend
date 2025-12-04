@@ -19,14 +19,22 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chatapp-frontend-sa8t.onrender.com", 
+];
+
 app.use(
   cors({
-    // origin: process.env.FRONTEND_URL,
-    origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    origin: allowedOrigins,
+    credentials: true,  // <- IMPORTANT
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
+
+app.options("*", cors());
+
 
 app.get("/", (req, res) => {
   res.send("Team Chat API running");
@@ -36,28 +44,26 @@ app.use("/api/auth", AuthRouter);
 app.use("/api/channels", channelRouter);
 app.use("/api/messages", messageRouter);
 
+
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    // origin: process.env.FRONTEND_URL,
-    origin: process.env.FRONTEND_URL,
-    
-    credentials: true,
+    origin: allowedOrigins,
+    credentials: true,  
   },
 });
 
+
 initSocket(io);
+
 
 const PORT = process.env.PORT || 5000;
 
 connectdb()
   .then(() => {
     httpServer.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+      console.log(`Server running at port ${PORT}`);
     });
   })
-  .catch((err) => {
-    console.error("DB connection failed:", err.message);
-    process.exit(1);
-  });
+  .catch((err) => console.error("DB connection error:", err));

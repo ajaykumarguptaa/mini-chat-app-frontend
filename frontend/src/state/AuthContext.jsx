@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(
     () => localStorage.getItem("chat_token") || null
   );
+
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -44,12 +45,12 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    const s = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000", {
+    const s = io(import.meta.env.VITE_SOCKET_URL, {
       auth: { token },
     });
 
     s.on("connect", () => {
-      console.log("Socket connected:", s.id);
+      // console.log("Socket connected:", s.id);
     });
 
     s.on("disconnect", () => {

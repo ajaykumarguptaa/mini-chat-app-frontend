@@ -22,8 +22,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "https://chatapp-frontend-3hmd.onrender.com",
+     process.env.VITE_FRONTEND_URL,
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
@@ -31,7 +30,7 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send("Team Chat API running");
+  res.send("API server teamchat is running...");
 });
 
 app.use("/api/auth", AuthRouter);
@@ -43,8 +42,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: [
-      "http://localhost:5173",
-      "https://chatapp-frontend-3hmd.onrender.com",
+      process.env.VITE_FRONTEND_URL,
     ],
     credentials: true,
   },

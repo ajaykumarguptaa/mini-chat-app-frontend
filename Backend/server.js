@@ -23,7 +23,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://chatapp-frontend-sa8t.onrender.com",
+      "https://chatapp-frontend-3hmd.onrender.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
@@ -44,7 +44,7 @@ const io = new Server(httpServer, {
   cors: {
     origin: [
       "http://localhost:5173",
-      "https://chatapp-frontend-sa8t.onrender.com",
+      "https://chatapp-frontend-3hmd.onrender.com",
     ],
     credentials: true,
   },

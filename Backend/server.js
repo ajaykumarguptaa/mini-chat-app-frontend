@@ -23,7 +23,6 @@ app.use(
   cors({
     // origin: process.env.FRONTEND_URL,
     origin:"chat-app-frontend-ochre-eight.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
